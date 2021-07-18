@@ -29,7 +29,6 @@ function App() {
       } else {
         setLoading(false);
         setIsError(true);
-
         throw new Error(resp.statusText);
       }
     } catch (e) {

@@ -1,63 +1,89 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import "./App.css";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
-import covidData from "./data.json";
-import icon1 from "./images/map_pin_blue5.svg";
+import regionalCenters from "../src/assets/data/data.json";
+import icon1 from "../src/assets/images/map_pin_blue5.svg";
 
-const covidIcon = new Icon({
+const crimeIcon = new Icon({
   iconUrl: icon1,
   iconSize: [25, 25],
 });
 
 function App() {
-  const [activeCovid, setActiveCovid] = useState(null);
-  return (
-    <MapContainer
-      //center={[20.593683, 78.962883]}
-      center={[55, -2]} //THE UK
-      zoom={6}
-      scrollWheelZoom={true}
-    >
-      {/*  <TileLayer
-        attribution='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-        url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
-      /> */}
+  const [dataCrimes, setDataCrimes] = useState(null);
+  const [currentCoordinates, setCurrentCoordinates] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [isError, setIsError] = useState(true);
 
+  async function fetchData(lat, lon) {
+    try {
+      const resp = await fetch(
+        `https://data.police.uk/api/crimes-street/all-crime?lat=${lat}&lng=${lon}`
+      );
+
+      if (resp.status >= 200 && resp.status <= 299) {
+        const json = await resp.json();
+        setDataCrimes([...json]);
+        setLoading(false);
+      } else {
+        setLoading(false);
+        setIsError(true);
+
+        throw new Error(resp.statusText);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  return (
+    <MapContainer center={[55, -2]} zoom={6} scrollWheelZoom={true}>
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {covidData.map((eachData) => (
+      {regionalCenters.map((eachData) => (
         <Marker
           key={eachData.Id}
           position={[eachData.Latitude, eachData.Longitude]}
           eventHandlers={{
             click: () => {
-              setActiveCovid(eachData);
+              setCurrentCoordinates([
+                ...currentCoordinates,
+                eachData.Latitude,
+                eachData.Longitude,
+              ]);
+              fetchData(eachData.Latitude, eachData.Longitude);
             },
           }}
-          icon={covidIcon}
+          icon={crimeIcon}
         />
       ))}
 
-      {activeCovid && (
+      {currentCoordinates.length !== 0 && dataCrimes && (
         <Popup
-          position={[activeCovid.Latitude, activeCovid.Longitude]}
+          position={currentCoordinates}
           onClose={() => {
-            setActiveCovid(null);
+            setDataCrimes(null);
+            setCurrentCoordinates([]);
+            setLoading(true);
           }}
         >
-          <div>
-            <h1>{activeCovid.Location}</h1>
-            <p>Total cases: {activeCovid.Total_Cases}</p>
-            <p>New cases (1 day*): {activeCovid.New_Cases_Per_Day}</p>
-            <p>
-              Cases per 1 million people:{" "}
-              {activeCovid.Cases_Per_1_Million_People}
-            </p>
-            <p>Deaths: {activeCovid.Deaths}</p>
-          </div>
+          {loading ? (
+            <h1>Loading...</h1>
+          ) : (
+            <div>
+              <h1>{dataCrimes.length}</h1>
+              <p>Total cases: {dataCrimes.Total_Cases}</p>
+              <p>New cases (1 day*): {dataCrimes.New_Cases_Per_Day}</p>
+              <p>
+                Cases per 1 million people:{" "}
+                {dataCrimes.Cases_Per_1_Million_People}
+              </p>
+              <p>Deaths: {dataCrimes.Deaths}</p>
+            </div>
+          )}
         </Popup>
       )}
     </MapContainer>

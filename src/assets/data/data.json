@@ -1,0 +1,74 @@
+[
+  {
+    "Id": 1,
+    "Location": "Birmingham",
+    "Latitude": 52.489471,
+    "Longitude": -1.898575
+  },
+  {
+    "Id": 2,
+    "Location": "Cardiff",
+    "Latitude": 51.481583,
+    "Longitude": -3.179090
+  },
+    {
+    "Id": 3,
+    "Location": "Liverpool",
+    "Latitude": 53.400002,
+    "Longitude": -2.983333
+  },
+    {
+    "Id": 4,
+    "Location": "Newcastle Upon Tyne",
+    "Latitude": 54.966667,
+    "Longitude": -1.600000
+  },
+   {
+    "Id": 5,
+    "Location": "Belfast",
+    "Latitude": 54.607868,
+    "Longitude": -5.926437
+  },
+  {
+    "Id": 6,
+    "Location": "Sheffield",
+    "Latitude": 53.383331,
+    "Longitude": -1.466667
+  },
+    {
+    "Id": 7,
+    "Location": "Leeds",
+    "Latitude": 53.801277,
+    "Longitude": -1.548567
+  },
+   {
+    "Id": 8,
+    "Location": "Cambridge",
+    "Latitude": 52.205276,
+    "Longitude": 0.119167
+  },
+  {
+    "Id": 9,
+    "Location": "London",
+    "Latitude": 51.509865,
+    "Longitude": -0.118092
+  },
+   {
+    "Id": 10,
+    "Location": "Manchester",
+    "Latitude": 53.483959,
+    "Longitude": -2.244644
+  },
+  {
+    "Id": 11,
+    "Location": "Bristol",
+    "Latitude": 51.454514,
+    "Longitude": -2.587910
+  },
+  {
+    "Id": 12,
+    "Location": "Glasgow",
+    "Latitude": 55.860916,
+    "Longitude": -4.251433
+  }
+ ]

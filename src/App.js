@@ -1,9 +1,10 @@
-import { React, useEffect, useState } from "react";
+import { React, useState } from "react";
 import "./App.css";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import { Icon } from "leaflet";
 import regionalCenters from "../src/assets/data/data.json";
 import icon1 from "../src/assets/images/map_pin_blue5.svg";
+import PopupInformation from "./components/PopupInformation";
 
 const crimeIcon = new Icon({
   iconUrl: icon1,
@@ -37,14 +38,14 @@ function App() {
   }
 
   return (
-    <MapContainer center={[55, -2]} zoom={6} scrollWheelZoom={true}>
+    <MapContainer center={[54.5, -3]} zoom={5.5} scrollWheelZoom={true}>
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {regionalCenters.map((eachData) => (
         <Marker
-          key={eachData.Id}
+          key={eachData.id}
           position={[eachData.Latitude, eachData.Longitude]}
           eventHandlers={{
             click: () => {
@@ -61,29 +62,16 @@ function App() {
       ))}
 
       {currentCoordinates.length !== 0 && dataCrimes && (
-        <Popup
+        <PopupInformation
           position={currentCoordinates}
-          onClose={() => {
+          isLoading={loading}
+          closePopup={() => {
             setDataCrimes(null);
             setCurrentCoordinates([]);
             setLoading(true);
           }}
-        >
-          {loading ? (
-            <h1>Loading...</h1>
-          ) : (
-            <div>
-              <h1>{dataCrimes.length}</h1>
-              <p>Total cases: {dataCrimes.Total_Cases}</p>
-              <p>New cases (1 day*): {dataCrimes.New_Cases_Per_Day}</p>
-              <p>
-                Cases per 1 million people:{" "}
-                {dataCrimes.Cases_Per_1_Million_People}
-              </p>
-              <p>Deaths: {dataCrimes.Deaths}</p>
-            </div>
-          )}
-        </Popup>
+          dataCrimes={dataCrimes}
+        />
       )}
     </MapContainer>
   );

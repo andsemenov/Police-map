@@ -3,6 +3,24 @@ import { Popup } from "react-leaflet";
 import regionalCenters from "../assets/data/data.json";
 
 const PopupInformation = (props) => {
+  const getFrequency = (array) => {
+    const map = {};
+    array.forEach((item) => {
+      if (map[item.category]) {
+        map[item.category]++;
+      } else {
+        map[item.category] = 1;
+      }
+    });
+    return map;
+  };
+
+  let entries = Object.entries(getFrequency(props.dataCrimes));
+
+  let topThreeCrimes = entries.sort((a, b) => b[1] - a[1]).slice(0, 3);
+
+  console.log(topThreeCrimes);
+
   return (
     <Popup position={props.position} onClose={props.closePopup}>
       {props.loading ? (
@@ -18,13 +36,19 @@ const PopupInformation = (props) => {
               ).location
             }
           </h1>
-          <h2>Total crimes: {props.dataCrimes.length}</h2>
-          <p>New cases (1 day*): {props.dataCrimes.New_Cases_Per_Day}</p>
+          <h3>Total crimes: {props.dataCrimes.length}</h3>
           <p>
-            Cases per 1 million people:
-            {props.dataCrimes.Cases_Per_1_Million_People}
+            Month:{" "}
+            {props.dataCrimes.length > 0 ? props.dataCrimes[0].month : "n/a"}
           </p>
-          <p>Deaths: {props.dataCrimes.Deaths}</p>
+          <div>
+            Top-3 crimes:
+            {topThreeCrimes.map((topCrime, index) => (
+              <p key={index}>
+                {topCrime[0]}: {topCrime[1]}
+              </p>
+            ))}
+          </div>
         </div>
       )}
     </Popup>
@@ -32,3 +56,11 @@ const PopupInformation = (props) => {
 };
 
 export default PopupInformation;
+
+/* 
+[
+["anti-social-behaviour", 552],
+["theft-from-the-person", 500],
+["other-theft", 412]
+] 
+*/

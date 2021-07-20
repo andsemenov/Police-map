@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import { Icon } from "leaflet";
 import regionalCenters from "../assets/data/data.json";
@@ -10,16 +10,16 @@ const crimeIcon = new Icon({
   iconSize: [25, 25],
 });
 
-function MapPackage() {
+function MapPackage(props) {
   const [dataCrimes, setDataCrimes] = useState(null);
   const [currentCoordinates, setCurrentCoordinates] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isError, setIsError] = useState(true);
 
-  async function fetchData(lat, lon) {
+  async function fetchData(lat, lon, date = "") {
     try {
       const resp = await fetch(
-        `https://data.police.uk/api/crimes-street/all-crime?lat=${lat}&lng=${lon}`
+        `https://data.police.uk/api/crimes-street/all-crime?lat=${lat}&lng=${lon}${date}`
       );
 
       if (resp.status >= 200 && resp.status <= 299) {
@@ -36,7 +36,6 @@ function MapPackage() {
     }
   }
 
-  console.log(dataCrimes);
   return (
     <MapContainer center={[54.5, -3]} zoom={5.5} scrollWheelZoom={true}>
       <TileLayer
@@ -49,12 +48,16 @@ function MapPackage() {
           position={[eachData.Latitude, eachData.Longitude]}
           eventHandlers={{
             click: () => {
+              fetchData(
+                eachData.Latitude,
+                eachData.Longitude,
+                props.selectedDate
+              );
               setCurrentCoordinates([
                 ...currentCoordinates,
                 eachData.Latitude,
                 eachData.Longitude,
               ]);
-              fetchData(eachData.Latitude, eachData.Longitude);
             },
           }}
           icon={crimeIcon}
@@ -69,6 +72,7 @@ function MapPackage() {
             setDataCrimes(null);
             setCurrentCoordinates([]);
             setLoading(true);
+            //selectedDate={props.selectedDate}
           }}
           dataCrimes={dataCrimes}
         />

@@ -14,17 +14,13 @@ const PopupInformation = (props) => {
     });
     return map;
   };
-
   let entries = Object.entries(getFrequency(props.dataCrimes));
-
   let topThreeCrimes = entries.sort((a, b) => b[1] - a[1]).slice(0, 3);
-
-  console.log(topThreeCrimes);
 
   return (
     <Popup position={props.position} onClose={props.closePopup}>
       {props.loading ? (
-        <h1>Loading...</h1>
+        <h1 id="test">Loading...</h1>
       ) : (
         <div>
           <h1>
@@ -56,11 +52,3 @@ const PopupInformation = (props) => {
 };
 
 export default PopupInformation;
-
-/* 
-[
-["anti-social-behaviour", 552],
-["theft-from-the-person", 500],
-["other-theft", 412]
-] 
-*/

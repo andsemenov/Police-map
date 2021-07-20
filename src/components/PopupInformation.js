@@ -22,8 +22,8 @@ const PopupInformation = (props) => {
       {props.loading ? (
         <h1 id="test">Loading...</h1>
       ) : (
-        <div>
-          <h1>
+        <div className="popup">
+          <h2 className="popup-content">
             {
               regionalCenters.find(
                 (regionalCenter) =>
@@ -31,17 +31,20 @@ const PopupInformation = (props) => {
                   regionalCenter.Longitude === props.position[1]
               ).location
             }
-          </h1>
-          <h3>Total crimes: {props.dataCrimes.length}</h3>
-          <p>
+          </h2>
+          <h5 className="popup-content">
             Month:{" "}
             {props.dataCrimes.length > 0 ? props.dataCrimes[0].month : "n/a"}
-          </p>
-          <div>
-            Top-3 crimes:
+          </h5>
+          <h3 className="popup-content">
+            Total crimes: {props.dataCrimes.length}
+          </h3>
+
+          <div className="top-crimes">
+            <h4>Top-3 crimes:</h4>
             {topThreeCrimes.map((topCrime, index) => (
-              <p key={index}>
-                {topCrime[0]}: {topCrime[1]}
+              <p key={index} className="top-crime">
+                - {topCrime[0]}: {topCrime[1]}
               </p>
             ))}
           </div>

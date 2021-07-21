@@ -35,7 +35,7 @@ function MapPackage(props) {
       console.error(e);
     }
   }
-
+  console.log("-------", props.selectedDate);
   return (
     <MapContainer center={[54.5, -3]} zoom={5.5} scrollWheelZoom={true}>
       <TileLayer
@@ -68,13 +68,13 @@ function MapPackage(props) {
         <PopupInformation
           position={currentCoordinates}
           isLoading={loading}
+          selectedDate={props.selectedDate}
           closePopup={() => {
             setDataCrimes(null);
             setCurrentCoordinates([]);
             setLoading(true);
-            //selectedDate={props.selectedDate}
           }}
-          dataCrimes={dataCrimes} ///////
+          dataCrimes={dataCrimes}
         />
       )}
     </MapContainer>

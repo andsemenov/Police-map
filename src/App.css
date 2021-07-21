@@ -1,5 +1,6 @@
 html,
-body {
+body,
+#root {
   height: 100%;
 }
 
@@ -31,8 +32,9 @@ body {
 }
 
 .header h1 {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   margin: 0;
+  margin-bottom: 5px;
 }
 
 .selects > select {
@@ -70,4 +72,25 @@ body {
   margin-bottom: 7px;
   margin-top: 7px;
   font-size: 0.75rem;
+}
+
+@media only screen and (max-width: 800px) {
+  .leaflet-container {
+    width: 80vw;
+    height: 90vh;
+  }
+  .header h1 {
+    font-size: 1.2rem;
+  }
+}
+
+@media only screen and (max-width: 540px) {
+  .header h1 {
+    font-size: 1rem;
+    text-align: center;
+  }
+  .leaflet-container {
+    width: 90vw;
+    height: 85vh;
+  }
 }

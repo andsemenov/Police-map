@@ -27,11 +27,19 @@ function Dashboard(props) {
   }, []);
 
   useEffect(() => {
+    const validDate = (date1, date2) => {
+      return new Date(date1).getTime() <= new Date(date2).getTime();
+    };
+    props.setSelectedDate(`&date=${availableDate}`);
     if (month !== "" && year !== "") {
-      props.setSelectedDate(`&date=${year}-${month}`);
-      setCurrentDate(`${year}-${month}`);
+      if (validDate(`${year}-${month}`, availableDate)) {
+        props.setSelectedDate(`&date=${year}-${month}`);
+        setCurrentDate(`${year}-${month}`);
+      } else {
+        alert("Please select a date before last updated");
+      }
     }
-  }, [month, year, props]);
+  }, [month, year, props, availableDate]);
 
   return (
     <div className="header">

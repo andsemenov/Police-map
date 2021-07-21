@@ -17,6 +17,7 @@ const PopupInformation = (props) => {
   let entries = Object.entries(getFrequency(props.dataCrimes));
   let topThreeCrimes = entries.sort((a, b) => b[1] - a[1]).slice(0, 3);
 
+  console.log(props.selectedDate.slice(-7));
   return (
     <Popup position={props.position} onClose={props.closePopup}>
       {props.loading ? (
@@ -34,20 +35,24 @@ const PopupInformation = (props) => {
           </h2>
           <h5 className="popup-content">
             Month:{" "}
-            {props.dataCrimes.length > 0 ? props.dataCrimes[0].month : "n/a"}
+            {props.dataCrimes.length > 0
+              ? props.dataCrimes[0].month
+              : props.selectedDate.slice(-7)}
           </h5>
           <h3 className="popup-content">
             Total crimes: {props.dataCrimes.length}
           </h3>
 
-          <div className="top-crimes">
-            <h4>Top-3 crimes:</h4>
-            {topThreeCrimes.map((topCrime, index) => (
-              <p key={index} className="top-crime">
-                - {topCrime[0]}: {topCrime[1]}
-              </p>
-            ))}
-          </div>
+          {props.dataCrimes.length !== 0 && (
+            <div className="top-crimes">
+              <h4>Top-3 crimes:</h4>
+              {topThreeCrimes.map((topCrime, index) => (
+                <p key={index} className="top-crime">
+                  - {topCrime[0]}: {topCrime[1]}
+                </p>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </Popup>

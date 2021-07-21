@@ -4,6 +4,7 @@ function Dashboard(props) {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
   const [availableDate, setAvailableDate] = useState("");
+  const [currentDate, setCurrentDate] = useState("");
 
   useEffect(() => {
     async function fetchAvailableDate() {
@@ -14,6 +15,7 @@ function Dashboard(props) {
         if (resp.status >= 200 && resp.status <= 299) {
           const json = await resp.json();
           setAvailableDate(json.date.slice(0, 7));
+          setCurrentDate(json.date.slice(0, 7));
         } else {
           throw new Error(resp.statusText);
         }
@@ -27,13 +29,28 @@ function Dashboard(props) {
   useEffect(() => {
     if (month !== "" && year !== "") {
       props.setSelectedDate(`&date=${year}-${month}`);
+      setCurrentDate(`${year}-${month}`);
     }
   }, [month, year, props]);
 
   return (
     <div className="header">
-      <h1>Street-level crimes for the last available period</h1>
+      <h1>
+        Street-level crimes during {currentDate} (last updated {availableDate})
+      </h1>
       <div className="selects">
+        <select
+          name="select-year"
+          onClick={(e) => {
+            setYear(e.target.value);
+          }}
+        >
+          <option value="">Choose a Year</option>
+          <option value="2021">2021</option>
+          <option value="2020">2020</option>
+          <option value="2019">2019</option>
+          <option value="2018">2018</option>
+        </select>
         <select
           name="select-month"
           onClick={(e) => {
@@ -53,18 +70,6 @@ function Dashboard(props) {
           <option value="10">October</option>
           <option value="11">November</option>
           <option value="12">December</option>
-        </select>
-        <select
-          name="select-year"
-          onClick={(e) => {
-            setYear(e.target.value);
-          }}
-        >
-          <option value="">Choose a Year</option>
-          <option value="2021">2021</option>
-          <option value="2020">2020</option>
-          <option value="2019">2019</option>
-          <option value="2018">2018</option>
         </select>
       </div>
     </div>

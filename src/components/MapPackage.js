@@ -68,7 +68,7 @@ function MapPackage(props) {
         <PopupInformation
           position={currentCoordinates}
           isLoading={loading}
-          // selectedDate={props.selectedDate}
+          selectedDate={props.selectedDate}
           closePopup={() => {
             setDataCrimes(null);
             setCurrentCoordinates([]);

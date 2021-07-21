@@ -5,7 +5,6 @@ import Dashboard from "./components/Dashboard";
 
 function App() {
   const [selectedDate, setSelectedDate] = useState("");
-  console.log("hhhhhh", selectedDate);
   return (
     <>
       <Dashboard setSelectedDate={setSelectedDate} />

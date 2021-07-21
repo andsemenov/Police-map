@@ -74,7 +74,7 @@ function MapPackage(props) {
             setLoading(true);
             //selectedDate={props.selectedDate}
           }}
-          dataCrimes={dataCrimes}
+          dataCrimes={dataCrimes} ///////
         />
       )}
     </MapContainer>

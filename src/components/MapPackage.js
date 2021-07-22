@@ -16,7 +16,16 @@ function MapPackage(props) {
   const [loading, setLoading] = useState(true);
   const [isError, setIsError] = useState(true);
 
-  async function fetchData(lat, lon, date = "") {
+  useEffect(() => {
+    if (currentCoordinates.length > 0)
+      fetchData(
+        currentCoordinates[0],
+        currentCoordinates[1],
+        props.selectedDate
+      );
+  }, [props.selectedDate, currentCoordinates]);
+
+  async function fetchData(lat, lon, date) {
     try {
       const resp = await fetch(
         `https://data.police.uk/api/crimes-street/all-crime?lat=${lat}&lng=${lon}${date}`
@@ -35,7 +44,6 @@ function MapPackage(props) {
       console.error(e);
     }
   }
-  console.log("-------", props.selectedDate);
   return (
     <MapContainer center={[54.5, -3]} zoom={5.5} scrollWheelZoom={true}>
       <TileLayer

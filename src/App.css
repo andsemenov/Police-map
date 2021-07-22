@@ -33,6 +33,7 @@ body {
 
 .header h1 {
   font-size: 1.3rem;
+  font-family: sans-serif;
   margin: 0;
   margin-bottom: 5px;
 }
@@ -92,5 +93,14 @@ body {
   .leaflet-container {
     width: 90vw;
     height: 85vh;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .leaflet-container {
+    width: 100vw;
+  }
+  .leaflet-popup-content-wrapper {
+    max-width: 200px;
   }
 }

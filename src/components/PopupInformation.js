@@ -32,7 +32,7 @@ const PopupInformation = (props) => {
             }
           </h2>
           <h5 className="popup-content">
-            Month: {props.dataCrimes.length && props.selectedDate.slice(-7)}
+            Month: {props.selectedDate.slice(-7)}
           </h5>
           <h3 className="popup-content">
             Total crimes: {props.dataCrimes.length}

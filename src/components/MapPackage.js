@@ -23,7 +23,7 @@ function MapPackage(props) {
         currentCoordinates[1],
         props.selectedDate
       );
-  }, [props.selectedDate, currentCoordinates]);
+  }, [props.selectedDate]);
 
   async function fetchData(lat, lon, date) {
     try {
@@ -44,6 +44,7 @@ function MapPackage(props) {
       console.error(e);
     }
   }
+
   return (
     <MapContainer center={[54.5, -3]} zoom={5.5} scrollWheelZoom={true}>
       <TileLayer

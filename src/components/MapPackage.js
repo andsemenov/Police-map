@@ -17,13 +17,13 @@ function MapPackage(props) {
   const [isError, setIsError] = useState(true);
 
   useEffect(() => {
-    if (currentCoordinates.length > 0)
+    if (currentCoordinates.length === 2)
       fetchData(
         currentCoordinates[0],
         currentCoordinates[1],
         props.selectedDate
       );
-  }, [props.selectedDate]);
+  }, [props.selectedDate, currentCoordinates]);
 
   async function fetchData(lat, lon, date) {
     try {

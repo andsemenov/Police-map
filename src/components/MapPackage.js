@@ -44,7 +44,7 @@ function MapPackage(props) {
       console.error(e);
     }
   }
-
+  console.log(currentCoordinates);
   return (
     <MapContainer center={[54.5, -3]} zoom={5.5} scrollWheelZoom={true}>
       <TileLayer
@@ -63,7 +63,7 @@ function MapPackage(props) {
                 props.selectedDate
               );
               setCurrentCoordinates([
-                ...currentCoordinates,
+                /*        ...currentCoordinates, */
                 eachData.Latitude,
                 eachData.Longitude,
               ]);
@@ -73,7 +73,7 @@ function MapPackage(props) {
         />
       ))}
 
-      {currentCoordinates.length !== 0 && dataCrimes && (
+      {currentCoordinates.length && dataCrimes && (
         <PopupInformation
           position={currentCoordinates}
           isLoading={loading}

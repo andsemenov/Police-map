@@ -62,11 +62,7 @@ function MapPackage(props) {
                 eachData.Longitude,
                 props.selectedDate
               );
-              setCurrentCoordinates([
-                /*        ...currentCoordinates, */
-                eachData.Latitude,
-                eachData.Longitude,
-              ]);
+              setCurrentCoordinates([eachData.Latitude, eachData.Longitude]);
             },
           }}
           icon={crimeIcon}

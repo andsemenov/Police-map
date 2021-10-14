@@ -44,7 +44,7 @@ function MapPackage(props) {
       console.error(e);
     }
   }
-  console.log(dataCrimes);
+
   return (
     <MapContainer center={[54.5, -3]} zoom={5.5} scrollWheelZoom={true}>
       <TileLayer
